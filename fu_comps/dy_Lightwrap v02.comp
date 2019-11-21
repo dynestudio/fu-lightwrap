@@ -1,0 +1,553 @@
+Composition {
+	CurrentTime = 0,
+	RenderRange = { 0, 1000 },
+	GlobalRange = { 0, 1000 },
+	CurrentID = 170,
+	HiQ = true,
+	MotionBlur = false,
+	PlaybackUpdateMode = 0,
+	Version = "Fusion Studio 9.0.1 build 3",
+	SavedOutputs = 2,
+	HeldTools = 0,
+	DisabledTools = 0,
+	LockedTools = 0,
+	AudioOffset = 0,
+	AutoRenderRange = true,
+	Resumable = true,
+	OutputClips = {
+	},
+	Tools = {
+		Background2_1 = Background {
+			Inputs = {
+				Width = Input { Value = 1920, },
+				Height = Input { Value = 1080, },
+				["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, },
+				TopLeftGreen = Input { Value = 0.733, },
+				TopLeftBlue = Input { Value = 0.705384201652224, },
+			},
+			ViewInfo = OperatorInfo { Pos = { 1790.52, 262.985 } },
+		},
+		Blur1_1 = Blur {
+			Inputs = {
+				XBlurSize = Input { Value = 6.8, },
+				Input = Input {
+					SourceOp = "Background2_1",
+					Source = "Output",
+				},
+			},
+			ViewInfo = OperatorInfo { Pos = { 2129.74, 199.25 } },
+		},
+		MC_LW_01 = MatteControl {
+			CtrlWZoom = false,
+			NameSet = true,
+			Inputs = {
+				Filter = Input { Value = FuID { "Multi-box" }, },
+				MatteBlur = Input { Value = 0.5, },
+				["Solid.MaskNest"] = Input { Value = 1, },
+				Background = Input {
+					SourceOp = "Constant",
+					Source = "Output",
+				},
+			},
+			ViewInfo = OperatorInfo { Pos = { 2143.58, 41.9461 } },
+		},
+		Instance_MC_LW_01_1 = MatteControl {
+			NameSet = true,
+			SourceOp = "MC_LW_01",
+			Inputs = {
+				MatteBlur = Input {
+					Value = 4,
+					Expression = "(MC_LW_01.MatteBlur)*8"
+				},
+				EffectMask = Input { },
+				["Solid.Matte"] = Input { },
+				["Solid.MaskNest"] = Input { Value = 1, },
+				["Garbage.Matte"] = Input { },
+				["Garbage.MaskNest"] = Input { },
+				Background = Input {
+					SourceOp = "Constant",
+					Source = "Output",
+				},
+				Foreground = Input { },
+				StartEndRenderScripts = Input { },
+			},
+			ViewInfo = OperatorInfo { Pos = { 2147.76, -116.175 } },
+		},
+		Instance_MC_LW_01 = MatteControl {
+			NameSet = true,
+			SourceOp = "MC_LW_01",
+			Inputs = {
+				MatteBlur = Input {
+					Value = 2,
+					Expression = "(MC_LW_01.MatteBlur)*4"
+				},
+				EffectMask = Input { },
+				["Solid.Matte"] = Input { },
+				["Solid.MaskNest"] = Input { Value = 1, },
+				["Garbage.Matte"] = Input { },
+				["Garbage.MaskNest"] = Input { },
+				Background = Input {
+					SourceOp = "Constant",
+					Source = "Output",
+				},
+				Foreground = Input { },
+				StartEndRenderScripts = Input { },
+			},
+			ViewInfo = OperatorInfo { Pos = { 2143.56, -60.3133 } },
+		},
+		Merge4 = Merge {
+			Inputs = {
+				Background = Input {
+					SourceOp = "Instance_MC_LW_01_1",
+					Source = "Output",
+				},
+				Foreground = Input {
+					SourceOp = "Instance_MC_LW_01",
+					Source = "Output",
+				},
+				ApplyMode = Input { Value = FuID { "Screen" }, },
+				PerformDepthMerge = Input { Value = 0, },
+			},
+			ViewInfo = OperatorInfo { Pos = { 2328.68, -60.3133 } },
+		},
+		Instance_MC_LW_02 = MatteControl {
+			NameSet = true,
+			SourceOp = "MC_LW_01",
+			Inputs = {
+				MatteBlur = Input {
+					Value = 1,
+					Expression = "(MC_LW_01.MatteBlur)*2"
+				},
+				EffectMask = Input { },
+				["Solid.Matte"] = Input { },
+				["Solid.MaskNest"] = Input { Value = 1, },
+				["Garbage.Matte"] = Input { },
+				["Garbage.MaskNest"] = Input { },
+				Background = Input {
+					SourceOp = "Constant",
+					Source = "Output",
+				},
+				Foreground = Input { },
+				StartEndRenderScripts = Input { },
+			},
+			ViewInfo = OperatorInfo { Pos = { 2143.76, -7.98743 } },
+		},
+		Merge5 = Merge {
+			Inputs = {
+				Background = Input {
+					SourceOp = "Merge4",
+					Source = "Output",
+				},
+				Foreground = Input {
+					SourceOp = "Instance_MC_LW_02",
+					Source = "Output",
+				},
+				ApplyMode = Input { Value = FuID { "Screen" }, },
+				PerformDepthMerge = Input { Value = 0, },
+			},
+			ViewInfo = OperatorInfo { Pos = { 2328.68, -7.98743 } },
+		},
+		Merge6 = Merge {
+			Inputs = {
+				Background = Input {
+					SourceOp = "MC_LW_01",
+					Source = "Output",
+				},
+				Foreground = Input {
+					SourceOp = "Merge5",
+					Source = "Output",
+				},
+				ApplyMode = Input { Value = FuID { "Screen" }, },
+				PerformDepthMerge = Input { Value = 0, },
+			},
+			ViewInfo = OperatorInfo { Pos = { 2328.68, 41.9461 } },
+		},
+		MatteControl2_1 = MatteControl {
+			Inputs = {
+				MatteCombine = Input { Value = 4, },
+				CombineOp = Input { Value = 2, },
+				Filter = Input { Value = FuID { "Multi-box" }, },
+				["Solid.MaskNest"] = Input { Value = 1, },
+				["Garbage.MaskNest"] = Input { Value = 1, },
+				Background = Input {
+					SourceOp = "Constant",
+					Source = "Output",
+				},
+				Foreground = Input {
+					SourceOp = "Merge6",
+					Source = "Output",
+				},
+			},
+			ViewInfo = OperatorInfo { Pos = { 2144.13, -487.066 } },
+		},
+		PipeRouter1 = PipeRouter {
+			Inputs = {
+				Input = Input {
+					SourceOp = "MatteControl2_1",
+					Source = "Output",
+				},
+			},
+			ViewInfo = PipeRouterInfo { Pos = { 2473.29, -487.066 } },
+		},
+		Merge2_1 = Merge {
+			Inputs = {
+				Background = Input {
+					SourceOp = "Constant",
+					Source = "Output",
+				},
+				Foreground = Input {
+					SourceOp = "Blur1_1",
+					Source = "Output",
+				},
+				PerformDepthMerge = Input { Value = 0, },
+				EffectMask = Input {
+					SourceOp = "PipeRouter1",
+					Source = "Output",
+				}
+			},
+			ViewInfo = OperatorInfo { Pos = { 2473.29, 76.2542 } },
+		},
+		Merge1_1 = Merge {
+			Inputs = {
+				Background = Input {
+					SourceOp = "Background2_1",
+					Source = "Output",
+				},
+				Foreground = Input {
+					SourceOp = "Merge2_1",
+					Source = "Output",
+				},
+				PerformDepthMerge = Input { Value = 0, },
+			},
+			ViewInfo = OperatorInfo { Pos = { 2497.77, 262.985 } },
+		},
+		BSpline1_1 = BSplineMask {
+			DrawMode = "InsertAndModify",
+			DrawMode2 = "InsertAndModify",
+			Inputs = {
+				MaskWidth = Input { Value = 1920, },
+				MaskHeight = Input { Value = 1080, },
+				PixelAspect = Input { Value = { 1, 1 }, },
+				ClippingMode = Input { Value = FuID { "None" }, },
+				Polyline = Input {
+					SourceOp = "BSpline1_1Polyline",
+					Source = "Value",
+				},
+				Polyline2 = Input {
+					Value = BSplinePolyline {
+						Order = 4,
+						Type = "Tensioned",
+						Knots = { }
+					},
+					Disabled = true,
+				},
+			},
+			ViewInfo = OperatorInfo { Pos = { 1773.67, 76.2542 } },
+		},
+		BSpline1_1Polyline = BezierSpline {
+			SplineColor = { Red = 96, Green = 255, Blue = 47 },
+			NameSet = true,
+			KeyFrames = {
+				[0] = { 0, Flags = { Linear = true, LockedY = true }, Value = BSplinePolyline {
+						Closed = true,
+						Points = {
+							{ X = 0.195450321849896, Y = 0.343234313990023 },
+							{ X = -0.139740018570102, Y = 0.278877887788779 },
+							{ X = -0.234447543390835, Y = -0.313531354782802 },
+							{ X = 0.227947999466429, Y = -0.293729376158502 }
+						},
+						Order = 4,
+						Type = "Tensioned",
+						Knots = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }
+					} }
+			}
+		},
+		Constant = Background {
+			NameSet = true,
+			Inputs = {
+				Width = Input { Value = 1920, },
+				Height = Input { Value = 1080, },
+				["Gamut.SLogVersion"] = Input { Value = FuID { "SLog2" }, },
+				TopLeftRed = Input { Value = 0.869838148268709, },
+				TopLeftGreen = Input { Value = 1, },
+				EffectMask = Input {
+					SourceOp = "BSpline1_1",
+					Source = "Mask",
+				}
+			},
+			ViewInfo = OperatorInfo { Pos = { 1907.5, 76.2542 } },
+		},
+		MatteControl1_1_2_1_1 = MatteControl {
+			Inputs = {
+				MatteCombine = Input { Value = 4, },
+				Filter = Input { Value = FuID { "Multi-box" }, },
+				MatteBlur = Input { Value = 15.9, },
+				Background = Input {
+					SourceOp = "Constant",
+					Source = "Output",
+				},
+			},
+			ViewInfo = OperatorInfo { Pos = { 1941.06, -331.595 } },
+		}
+	},
+	Views = {
+		{
+			FrameTypeID = "ChildFrame",
+			Mode = 3,
+			LayoutPreset = 0,
+			Left = 0,
+			Top = 27,
+			Width = 1920,
+			Height = 922,
+			Views = ordered() {
+				Left = "PreviewContainer",
+				Right = "PreviewContainer",
+				Time = "TimeView"
+			},
+			Layout = {
+				Rows = 2,
+				RatioX = 1,
+				RatioY = 1,
+				{
+					Columns = 2,
+					RatioX = 1,
+					RatioY = 0.936750272628135,
+					{ ID = "Left", RatioX = 1, RatioY = 0.0116414435389988, Pop = true },
+					{ ID = "Right", RatioX = -2, Pop = true },
+					Pop = true
+				},
+				{ ID = "Time", SnapY = 56, Flat = true }
+			}
+		},
+		{
+			FrameTypeID = "FloatViewFrame",
+			Mode = 0,
+			Left = 1920,
+			Top = 27,
+			Width = 1920,
+			Height = 1057,
+			Views = ordered() {
+				Frame3 = MultiView {
+					ViewList = ordered() {
+					},
+				},
+				Frame2 = MultiView {
+					ViewList = ordered() {
+					},
+				},
+				Frame4 = MultiView {
+					ViewList = ordered() {
+					},
+				},
+				FlowTabs = MultiView {
+					Active = "Flow",
+					ViewList = ordered() {
+						Flow = "FlowView",
+						Console = "ConsoleView",
+						Timeline = "TimelineView",
+						Spline = "SplineEditorView",
+						Info = "InfoView",
+						Chat = "ChatView"
+					},
+					Flow = FlowView {
+						Flags = {
+							Navigator = true,
+							AutoHideNavigator = true,
+							ConnectedSnap = true,
+							AutoSnap = true,
+							RemoveRouters = true
+						},
+						NavigatorSize = { 200, 140 },
+						Direction = "Horizontal",
+						PipeStyle = "Direct",
+						Scale = 1.41421,
+						Offset = { -1739.06, 584.131 }
+					},
+					Timeline = TimelineView {
+						TreeControlState = {
+						},
+						DisplayMode = "All Tools",
+						ShowCurrentTimeTools = false,
+						Filter = "Show All",
+						ShowSelectedTools = false,
+						ShowAnimatedToolsOnly = false,
+						ShowEditBoxes = false,
+						KeyFrameView = {
+							Position = { Left = 150, Bottom = 343 },
+							ScaleX = 2.14424951267057,
+							OffsetX = -51.4619883040937,
+							OffsetY = 0,
+							AutoScaling = "scroll",
+							AutoSnapTo = "frame",
+							AutoSnapToGuidelines = true,
+							GuidelinesGrabEnabled = true,
+							GuidelinesSnapTo = "frame"
+						},
+						Spreadsheet = { LeftPos = 150, Visible = false }
+					},
+					Spline = SplineEditorView {
+						LeftPos = 256,
+						ScaleX = 0.2,
+						ScaleY = 0.00338983050847458,
+						OffsetX = -3.8,
+						OffsetY = -4.66293670342566e-015,
+						AutoScaling = "scroll",
+						AutoSnapTo = "frame",
+						AutoSnapToGuidelines = true,
+						GuidelinesSnapTo = "frame",
+						ShowKeyMarkers = false,
+						IndependentHandles = false,
+						ShowNonSplineModifiers = false,
+						GuidelinesGrabEnabled = true,
+						ShowOneToolOnly = false,
+						ShowSelectedTools = false,
+						ShowAllInputs = false,
+						Filter = "Show All"
+					},
+				},
+				ToolsTabs = MultiView {
+					Active = "Tools",
+					ViewList = ordered() {
+						Tools = "ControlView",
+						Modifiers = "ModifierView"
+					},
+				},
+				Transport = "TransportView"
+			},
+			Layout = {
+				Columns = 2,
+				RatioX = 1,
+				RatioY = 1,
+				{
+					Rows = 2,
+					RatioX = 0.178590078328982,
+					RatioY = 95.9090047393365,
+					{ ID = "ToolsTabs", RatioX = 1, RatioY = 1, Pop = true },
+					{ ID = "Transport", FixedY = -2, Pop = true }
+				},
+				{ ID = "FlowTabs", RatioX = 0.821409921671018, Pop = true }
+			}
+		}
+	},
+	Prefs = {
+		Comp = {
+			Views = {
+				Right = {
+					SubView = {
+						Enabled = true,
+						GLHistogramViewer = {
+							AutoBounds = true
+						},
+					},
+				},
+				Left = {
+					Viewer = {
+						EnableLUTs = true,
+						LUTSelected = "Fusion View LUT",
+						Channel = 3,
+						CheckerUnderlay = false,
+						ScaleMode = 1,
+						Smooth = true,
+					},
+					SubView = {
+						Enabled = true,
+						Navigator = false,
+						Magnifier = false,
+						ID = "GLColorInspector",
+						GLColorInspector = {
+							AutoBounds = true
+						},
+						GLHistogramViewer = {
+							AutoBounds = true
+						},
+					},
+					ViewLUT = {
+						{
+							Tools = ordered() {
+								FusionViewLUT = ViewLUTOp {
+									CtrlWZoom = false,
+									NameSet = true,
+									Inputs = {
+										EditAlpha = Input { Value = 1, },
+										Gamma = Input { Value = 2.2, },
+										AlphaGamma = Input { Value = 2.2, },
+									},
+								}
+							},
+							ID = "FusionViewLUT"
+						},
+						Recent = {
+							SelectedPlugin = "FusionViewLUT",
+							FusionViewLUT = {
+								Tools = ordered() {
+									FusionViewLUT = ViewLUTOp {
+										NameSet = true,
+										Inputs = {
+										},
+										CtrlWZoom = false
+									}
+								}
+							},
+							GamutViewLUT = {
+								Tools = ordered() {
+									GamutViewLUT = ViewOperator {
+										NameSet = true,
+										Inputs = {
+											OutputSpace = Input { Value = FuID { "sRGB" } }
+										},
+										CtrlWZoom = false
+									}
+								}
+							},
+							SelectedName = "Fusion View LUT"
+						},
+						SelectedName = "Fusion View LUT",
+						SelectedPlugin = "FusionViewLUT"
+					},
+					Toolbar = {
+						Style = 0,
+						Size = 0
+					},
+					OpToolbar = {
+						Style = 0,
+						Size = 1
+					},
+				},
+				View1 = {
+				},
+			},
+			FrameFormat = {
+				GuideRatio = 1.77777777777778,
+				DepthFull = 3,
+				DepthPreview = 3,
+				DepthInteractive = 3,
+			},
+			LastFile = "/Users/Carlos/Downloads/Dijon - Navidad Retail/Render/C4D/Assets Navidad_v01/Dijon_Navidad Assets_MP_Regalos v01.exr",
+			PolyKeyListDlg = {
+				Window = {
+					Left = 907,
+					Top = 250
+				}
+			},
+			AVI = {
+				Saver = {
+					Handler = 1668707181,
+				},
+				Preview = {
+					DataCheck = true,
+					Key = 15,
+					Handler = 1668707181,
+					KeyCheck = true,
+					DataRate = 300,
+					Quality = 75
+				}
+			},
+			Paths = {
+			},
+			QuickTime = {
+			},
+		}
+	}
+}
+
+ 
